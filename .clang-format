@@ -1,0 +1,13 @@
+BasedOnStyle: Google
+Language: Cpp
+Standard: Cpp11
+ColumnLimit: 80
+DerivePointerAlignment: false
+PointerAlignment: Left
+AllowShortBlocksOnASingleLine: false
+AllowShortBlocksOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Empty
+SortIncludes: true
