@@ -24,8 +24,8 @@ void print_int_human_readable(int64_t val, int base = 1024) {
 }
 
 template <typename T>
-void do_instrument(std::function<void(T*, size_t)> f, size_t n,
-                   const std::string& name) {
+void do_instrument(
+    std::function<void(T*, size_t)> f, size_t n, const std::string& name) {
   std::vector<T> a(n);
   std::iota(a.begin(), a.end(), 0);
   std::random_device rd;
@@ -51,8 +51,11 @@ void do_instrument(std::function<void(T*, size_t)> f, size_t n,
 }
 
 template <typename T>
-void do_instrument(std::function<void(T*, size_t)> f, size_t n_min,
-                   size_t n_max, const std::string& name) {
+void do_instrument(
+    std::function<void(T*, size_t)> f,
+    size_t n_min,
+    size_t n_max,
+    const std::string& name) {
   printf("%-8s", "n");
   printf(" | ");
   printf("%-24s", "       swaps");
@@ -107,9 +110,13 @@ void do_instrument(std::function<void(T*, size_t)> f, size_t n_min,
 }
 }  // namespace algorithms
 
-#define instrument(function, type, n_min, n_max)                \
-  algorithms::do_instrument<algorithms::instrumented_t<         \
-      type, algorithms::InstrumentPolicy_CountOperations>>(     \
-      function<algorithms::instrumented_t<                      \
-          type, algorithms::InstrumentPolicy_CountOperations>>, \
-      n_min, n_max, #function "_" #type);
+#define instrument(function, type, n_min, n_max)          \
+  algorithms::do_instrument<algorithms::instrumented_t<   \
+      type,                                               \
+      algorithms::InstrumentPolicy_CountOperations>>(     \
+      function<algorithms::instrumented_t<                \
+          type,                                           \
+          algorithms::InstrumentPolicy_CountOperations>>, \
+      n_min,                                              \
+      n_max,                                              \
+      #function "_" #type);

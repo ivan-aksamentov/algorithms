@@ -60,20 +60,23 @@ struct instrumented_t : public InstrumentPolicy {
 };
 
 template <typename T, typename InstrumentPolicy>
-inline void swap(instrumented_t<T, InstrumentPolicy>& l,
-                 instrumented_t<T, InstrumentPolicy>& r) {
+inline void swap(
+    instrumented_t<T, InstrumentPolicy>& l,
+    instrumented_t<T, InstrumentPolicy>& r) {
   l.swap(r);
 }
 
 template <typename T, typename InstrumentPolicy>
-inline bool operator==(const instrumented_t<T, InstrumentPolicy>& l,
-                       const instrumented_t<T, InstrumentPolicy>& r) {
+inline bool operator==(
+    const instrumented_t<T, InstrumentPolicy>& l,
+    const instrumented_t<T, InstrumentPolicy>& r) {
   return l.operator==(r);
 }
 
 template <typename T, typename InstrumentPolicy>
-inline bool operator<(const instrumented_t<T, InstrumentPolicy>& l,
-                      const instrumented_t<T, InstrumentPolicy>& r) {
+inline bool operator<(
+    const instrumented_t<T, InstrumentPolicy>& l,
+    const instrumented_t<T, InstrumentPolicy>& r) {
   return l.operator<(r);
 }
 }  // namespace algorithms

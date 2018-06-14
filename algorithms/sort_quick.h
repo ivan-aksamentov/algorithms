@@ -42,7 +42,7 @@ void sort_quick_impl(T* a, int lo, int hi) {
   sort_quick_impl(a, j + 1, hi);
 }
 
-}  // namespace details_sort_quick_2way
+}  // namespace details_sort_quick
 
 template <typename T>
 void sort_quick(T* a, int size) {

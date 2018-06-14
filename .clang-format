@@ -11,3 +11,8 @@ AllowShortIfStatementsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Empty
 SortIncludes: true
+ReflowComments:  true
+AlignAfterOpenBracket: AlwaysBreak
+Cpp11BracedListStyle: true
+BinPackArguments: false
+BinPackParameters: false
