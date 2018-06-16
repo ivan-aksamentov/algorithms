@@ -11,6 +11,7 @@ find_package(GoogleTest REQUIRED)
 enable_testing()
 
 add_executable(${PROJECT_NAME}
+    test_binary_gap.cpp
     test_sort.h
     test_sort_insertion.cpp
     test_sort_insertion_improved.cpp

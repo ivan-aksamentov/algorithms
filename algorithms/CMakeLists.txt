@@ -7,6 +7,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 
 add_library(${PROJECT_NAME} STATIC
+    include/algorithms/binary_gap.h
     include/algorithms/heap.h
     include/algorithms/sort_insertion.h
     include/algorithms/sort_insertion_improved.h
