@@ -1,9 +1,9 @@
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.8)
 
 include(FindPackageHandleStandardArgs)
 unset(GoogleTest_FOUND)
 
-find_library(Threads REQUIRED)
+find_package(Threads REQUIRED)
 
 find_path(GoogleTest_INCLUDE_DIR
         NAMES
@@ -107,32 +107,34 @@ find_package_handle_standard_args(
     GoogleTest_gtest_LIBRARY_RELEASE
     GoogleTest_gmock_LIBRARY_RELEASE
     GoogleTest_gmock_main_LIBRARY_RELEASE
-    # GoogleTest_gtest_LIBRARY_DEBUG
-    # GoogleTest_gmock_LIBRARY_DEBUG
-    # GoogleTest_gmock_main_LIBRARY_DEBUG
 )
 
 if(GOOGLETEST_FOUND)
     set(GoogleTest_FOUND ${GOOGLETEST_FOUND})
-    if (WIN32)
-        set(GoogleTest_LIBRARIES
-                "$<$<NOT:$<CONFIG:DEBUG>>:${GoogleTest_gtest_LIBRARY_RELEASE}>"
-                "$<$<NOT:$<CONFIG:DEBUG>>:${GoogleTest_gmock_LIBRARY_RELEASE}>"
-                "$<$<NOT:$<CONFIG:DEBUG>>:${GoogleTest_gmock_main_LIBRARY_RELEASE}>"
-                "$<$<CONFIG:DEBUG>:${GoogleTest_gtest_LIBRARY_DEBUG}>"
-                "$<$<CONFIG:DEBUG>:${GoogleTest_gmock_LIBRARY_DEBUG}>"
-                "$<$<CONFIG:DEBUG>:${GoogleTest_gmock_main_LIBRARY_DEBUG}>"
-            ${CMAKE_THREAD_LIBS_INIT}
-        )
-    else()
-        set(GoogleTest_LIBRARIES
-                ${GoogleTest_gtest_LIBRARY_RELEASE}
-                ${GoogleTest_gmock_LIBRARY_RELEASE}
-                ${GoogleTest_gmock_main_LIBRARY_RELEASE}
-            ${CMAKE_THREAD_LIBS_INIT}
-        )
-    endif()
-    set(GoogleTest_INCLUDE_DIRS
-    ${GoogleTest_INCLUDE_DIR}
+
+    add_library(GoogleTest INTERFACE IMPORTED)
+
+    target_include_directories(GoogleTest INTERFACE
+        ${GoogleTest_INCLUDE_DIR}
+    )
+
+    target_link_libraries(GoogleTest INTERFACE
+
+        # For windows in debug mode
+        $<$<BOOL:${WIN32}>:$<$<CONFIG:DEBUG>:${GoogleTest_gtest_LIBRARY_DEBUG}>>
+        $<$<BOOL:${WIN32}>:$<$<CONFIG:DEBUG>:${GoogleTest_gmock_LIBRARY_DEBUG}>>
+        $<$<BOOL:${WIN32}>:$<$<CONFIG:DEBUG>:${GoogleTest_gmock_main_LIBRARY_DEBUG}>>
+
+        # For windows in release mode
+        $<$<BOOL:${WIN32}>:$<$<CONFIG:RELEASR>:${GoogleTest_gtest_LIBRARY_RELEASE}>>
+        $<$<BOOL:${WIN32}>:$<$<CONFIG:RELEASR>:${GoogleTest_gmock_LIBRARY_RELEASE}>>
+        $<$<BOOL:${WIN32}>:$<$<CONFIG:RELEASR>:${GoogleTest_gmock_main_LIBRARY_RELEASE}>>
+
+        # For non-windows, export release libs
+        $<$<NOT:$<BOOL:${WIN32}>>:${GoogleTest_gtest_LIBRARY_RELEASE}>
+        $<$<NOT:$<BOOL:${WIN32}>>:${GoogleTest_gmock_LIBRARY_RELEASE}>
+        $<$<NOT:$<BOOL:${WIN32}>>:${GoogleTest_gmock_main_LIBRARY_RELEASE}>
+
+        Threads::Threads
     )
 endif()

@@ -1,53 +1,34 @@
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.8)
+cmake_policy(SET CMP0069 NEW)
 
 project(algorithms)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 
-set(definitions
-
+add_library(${PROJECT_NAME} STATIC
+    include/algorithms/heap.h
+    include/algorithms/sort_insertion.h
+    include/algorithms/sort_insertion_improved.h
+    include/algorithms/sort_merge_topdown_cutoff.h
+    include/algorithms/sort_merge_topdown.h
+    include/algorithms/sort_merge_topdown_if_not_sorted.h
+    include/algorithms/sort_merge_topdown_nc.h
+    include/algorithms/sort_quick.h
+    include/algorithms/sort_selection.h
+    include/algorithms/sort_shell.h
+    src/dummy.cpp
 )
 
-set(include_dirs
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
-    ${common_INCLUDE_DIRS}
+target_compile_definitions(${PROJECT_NAME}
+    PUBLIC ""
 )
 
-file(GLOB glob_headers *.h)
-
-set(public_headers
-    ${glob_headers}
+target_include_directories(${PROJECT_NAME}
+    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
-set(headers
-    ${public_headers}
+target_link_libraries(${PROJECT_NAME} INTERFACE
+    common
 )
-
-set(library_dirs
-
-)
-
-set(libraries
-
-)
-
-include_directories(${include_dirs})
-add_library(${PROJECT_NAME} INTERFACE )
-add_custom_target(${PROJECT_NAME}_ SOURCES ${headers})
-
-set(${PROJECT_NAME}_DEFINITIONS
-    ${definitions}
-    CACHE INTERNAL "${PROJECT_NAME}: Definitions" FORCE)
-
-set(${PROJECT_NAME}_INCLUDE_DIRS
-    ${include_dirs}
-    CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
-
-set(${PROJECT_NAME}_LIBRARIES
-    ${libraries}
-    CACHE INTERNAL "${PROJECT_NAME}: Libraries" FORCE)
-
-set(${PROJECT_NAME}_LIBRARY_DIRS
-    ${library_dirs}
-    CACHE INTERNAL "${PROJECT_NAME}: Library directories" FORCE)

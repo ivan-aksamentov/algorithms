@@ -6,12 +6,6 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/cool-cmake-config ${CMAKE_MODULE_PATH})
 
-include(CheckIPOSupported)
-check_ipo_supported(RESULT result)
-if(result)
-    set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE 1)
-endif()
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_EXTENSIONS 0)
@@ -19,10 +13,13 @@ set(CMAKE_C_EXTENSIONS 0)
 
 include(CoolCFlags)
 include(CoolCXXFlags)
+include(CoolCUDAFlags)
 include(CoolSanitizers)
 include(CoolNativeArch)
 include(CoolVectorize)
+include(CoolAssocMath)
 include(CoolFastMath)
+include(CoolLTO)
 
 add_subdirectory(common)
 

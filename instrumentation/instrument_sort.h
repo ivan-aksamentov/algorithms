@@ -15,7 +15,7 @@ void print_int_human_readable(int64_t val, int base = 1024) {
   char const* prefix = prefixes;
   long double valf = static_cast<long double>(val);
 
-  while (valf > base && prefixes) {
+  while ((valf > base) && *prefix) {
     valf = valf / base;
     ++prefix;
   }
