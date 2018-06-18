@@ -24,6 +24,7 @@ void merge(T* a, T* aux, int lo, int mid, int hi) {
 
 template <typename T>
 void insertion_sort(T* a, int lo, int hi) {
+  using std::swap;
   for (int i = lo; i <= hi; i++) {
     for (int j = i; j > lo && a[j] < a[j - 1]; j--) {
       swap(a[j], a[j - 1]);
